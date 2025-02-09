@@ -42,7 +42,7 @@ Add the Gemini Kotlin Client dependency to your module-level `build.gradle.kts` 
 
 ```kotlin
 dependencies {
-    implementation("com.github.sanctus-corvus:LuminaKt:0.1")
+    implementation("com.github.sanctus-corvus:LuminaKt:0.1.1")
 }
 ```
 
