@@ -1,7 +1,7 @@
 plugins {
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.serialization") version "1.9.23"
-    `maven-publish`
+    id("maven-publish")
 }
 group = "com.github.sanctus-corvus"
 version = "0.1"
