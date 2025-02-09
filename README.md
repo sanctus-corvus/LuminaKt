@@ -1,7 +1,7 @@
 # Lumina Gemini Kotlin Client
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![JitPack](https://jitpack.io/v/your-github-username/your-repo.svg)](https://jitpack.io/#your-github-username/your-repo) <!-- Replace with your JitPack badge once published -->
+[![](https://jitpack.io/v/sanctus-corvus/LuminaKt.svg)](https://jitpack.io/#sanctus-corvus/LuminaKt)
 
 **Your Kotlin Gateway to the Power of Gemini AI**
 
