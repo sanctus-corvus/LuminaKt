@@ -19,7 +19,16 @@ tasks.test {
     useJUnitPlatform()
 }
 kotlin {
-    jvmToolchain(19)
+    jvmToolchain(11)
+}
+tasks.register<Jar>("sourcesJar") {
+    archiveClassifier.set("sources")
+    from(sourceSets.main.get().allSource)
+}
+
+tasks.register<Jar>("javadocJar") {
+    archiveClassifier.set("javadoc")
+    from(tasks.getByName("javadoc"))
 }
 
 publishing {
@@ -29,35 +38,31 @@ publishing {
             artifactId = "lumina-kt"
             version = project.version.toString()
 
+            from(components["java"])
+            artifact(tasks.getByName("sourcesJar"))
+            artifact(tasks.getByName("javadocJar"))
+
             pom {
-                name = "Gemini Kotlin Client"
-                description = "Kotlin client library for the Gemini API"
-                url = "https://github.com/your-username/your-repo"
+                name.set("LuminaKt")
+                description.set("Kotlin client library for the Gemini API")
+                url.set("https://github.com/sanctus-corvus/LuminaKt")
                 licenses {
                     license {
-                        name = "MIT License"
-                        url = "https://opensource.org/licenses/MIT"
+                        name.set("MIT License")
+                        url.set("https://opensource.org/licenses/MIT")
                     }
                 }
                 developers {
                     developer {
-                        id = "sanctus-corvus"
-                        name = "Sanctus Corvus"
+                        id.set("sanctus-corvus")
+                        name.set("Sanctus Corvus")
                     }
                 }
                 scm {
-                    url = "https://github.com/sanctus-corvus"
+                    url.set("https://github.com/sanctus-corvus/LuminaKt")
                 }
             }
-
-            from(components["java"])
         }
-    }
-    repositories {
-        maven {
-            name = "localRepo"
-            url = uri("$rootDir/repo")
-        }
-
     }
 }
+
