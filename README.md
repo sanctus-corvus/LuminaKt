@@ -88,23 +88,23 @@ This example demonstrates:
 The `GeminiClient` is configured using the `Configuration` class, offering various customization options:
 
 ```kotlin
-val configuration = Configuration.create(apiKey = "YOUR_API_KEY") {
-    modelName = GeminiClient.GeminiModel.GEMINI_15PRO // Choose your Gemini model
-    apiBaseUrl = "https://your-custom-api-url.com/v1beta/models/${modelName}" // Customize API base URL (if needed)
+val config = GeminiClient.Configuration.create(
+    apiKey = "YOUR_API_KEY", // ✅ API ключ передается как именованный аргумент
+    modelName = GeminiClient.GeminiModel.GEMINI_15PRO, // ✅ modelName, если нужно изменить
 
-    safetySettingsBuilder {
-        blockOnlyHighHarassment() // Relaxed safety setting for harassment
+    safetySettingsBuilder = { 
+        blockOnlyHighHarassment() 
         // Add more safety settings using builder methods
-    }
+    },
 
-    generationConfigBuilder {
-        temperature(0.7)      // Adjust temperature for creativity
+    generationConfigBuilder = { 
+        temperature(0.7)    
         maxOutputTokens(800)   // Set maximum output tokens
         // Add other generation configurations
     }
-}
+)
 
-val geminiClient = GeminiClient(configuration)
+val geminiClient = GeminiClient(config)
 ```
 
 Explore the `Configuration` class and its companion object methods (`default`, `withModel`, `defaultSafetySettings`, `relaxedSafetySettings`, `noSafetySettings`, `creativeGenerationConfig`, `preciseGenerationConfig`) for various pre-defined and customizable configurations.
