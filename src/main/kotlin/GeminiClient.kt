@@ -13,7 +13,7 @@ import kotlinx.serialization.decodeFromString
  * Инкапсулирует логику отправки запросов и обработки ответов.
  * Конфигурация клиента задается через класс Configuration.
  */
-class GeminiClient(configuration: Configuration) {
+public class GeminiClient(configuration: Configuration) {
 
     private val apiKey: String = configuration.apiKey
     private val apiBaseUrl: String = configuration.apiBaseUrl
@@ -71,7 +71,7 @@ class GeminiClient(configuration: Configuration) {
      * @param generationConfig Параметры конфигурации генерации (переопределяют дефолтные, если заданы).
      * @return HttpResponse с кодом статуса и ответом Gemini API.
      */
-    fun generateContent(
+    public fun generateContent(
         prompt: String,
         safetySettings: List<SafetySetting>? = null,
         generationConfig: GenerationConfig? = null
@@ -105,14 +105,14 @@ class GeminiClient(configuration: Configuration) {
      * Позволяет задать API ключ, модель, базовый URL и настройки по умолчанию.
      * Используйте Configuration.create(...) для создания экземпляра конфигурации.
      */
-    data class Configuration(
+    public data class Configuration(
         val apiKey: String,
         val modelName: String = GeminiModel.GEMINI_15PRO.modelName,
         val apiBaseUrl: String = "https://generativelanguage.googleapis.com/v1beta/models/$modelName",
         val defaultSafetySettings: List<SafetySetting>? = defaultSafetySettings(),
         val defaultGenerationConfig: GenerationConfig? = defaultGenerationConfig()
     ) {
-        companion object {
+        public companion object {
             /**
              * Создает конфигурацию GeminiClient с заданным API ключом и настройками.
              * Используйте лямбда-функции `safetySettingsBuilder` и `generationConfigBuilder` для кастомизации настроек.
@@ -122,7 +122,7 @@ class GeminiClient(configuration: Configuration) {
              * @param generationConfigBuilder Лямбда-функция для настройки GenerationConfigBuilder.
              * @return Экземпляр Configuration.
              */
-            fun create(
+            public fun create(
                 apiKey: String,
                 modelName: GeminiModel = GeminiModel.GEMINI_15PRO,
                 safetySettingsBuilder: SafetySettingsBuilder.() -> Unit = {},
@@ -141,7 +141,7 @@ class GeminiClient(configuration: Configuration) {
              * @param apiKey API ключ Gemini.
              * @return Экземпляр Configuration.
              */
-            fun default(apiKey: String) = Configuration(apiKey = apiKey)
+            public fun default(apiKey: String): Configuration = Configuration(apiKey = apiKey)
 
             /**
              * Создает конфигурацию с указанной моделью Gemini и дефолтными настройками.
@@ -149,14 +149,14 @@ class GeminiClient(configuration: Configuration) {
              * @param modelName Модель Gemini для использования.
              * @return Экземпляр Configuration.
              */
-            fun withModel(apiKey: String, modelName: GeminiModel) =
+            public fun withModel(apiKey: String, modelName: GeminiModel): Configuration =
                 Configuration(apiKey = apiKey, modelName = modelName.modelName)
 
             /**
              * Возвращает дефолтные настройки безопасности (блокировка на среднем уровне и выше для всех категорий).
              * @return Список SafetySetting.
              */
-            fun defaultSafetySettings(): List<SafetySetting> = SafetySettingsBuilder()
+            public fun defaultSafetySettings(): List<SafetySetting> = SafetySettingsBuilder()
                 .blockMediumAndAboveHarassment()
                 .blockMediumAndAboveHateSpeech()
                 .blockMediumAndAboveSexuallyExplicit()
@@ -168,7 +168,7 @@ class GeminiClient(configuration: Configuration) {
              * Возвращает "мягкие" настройки безопасности (блокировка только на высоком уровне для всех категорий).
              * @return Список SafetySetting.
              */
-            fun relaxedSafetySettings(): List<SafetySetting> = SafetySettingsBuilder()
+            public fun relaxedSafetySettings(): List<SafetySetting> = SafetySettingsBuilder()
                 .blockOnlyHighHarassment()
                 .blockOnlyHighHateSpeech()
                 .blockOnlyHighSexuallyExplicit()
@@ -180,13 +180,13 @@ class GeminiClient(configuration: Configuration) {
              * Возвращает пустой список Safety Settings, отключая фильтрацию безопасности.
              * @return Пустой список SafetySetting.
              */
-            fun noSafetySettings(): List<SafetySetting> = emptyList()
+            public fun noSafetySettings(): List<SafetySetting> = emptyList()
 
             /**
              * Возвращает конфигурацию генерации, настроенную на креативность (высокая температура, top-p, top-k).
              * @return GenerationConfig.
              */
-            fun creativeGenerationConfig(): GenerationConfig = GenerationConfigBuilder()
+            public fun creativeGenerationConfig(): GenerationConfig = GenerationConfigBuilder()
                 .temperature(0.9)
                 .topP(0.9)
                 .topK(30)
@@ -197,7 +197,7 @@ class GeminiClient(configuration: Configuration) {
              * Возвращает конфигурацию генерации, настроенную на точность (низкая температура, top-p, top-k).
              * @return GenerationConfig.
              */
-            fun preciseGenerationConfig(): GenerationConfig = GenerationConfigBuilder()
+            public fun preciseGenerationConfig(): GenerationConfig = GenerationConfigBuilder()
                 .temperature(0.2)
                 .topP(0.3)
                 .topK(5)
@@ -209,7 +209,7 @@ class GeminiClient(configuration: Configuration) {
              * Возвращает null, указывая на использование дефолтной конфигурации генерации от API.
              * @return null.
              */
-            fun defaultGenerationConfig(): GenerationConfig? = null
+            public fun defaultGenerationConfig(): GenerationConfig? = null
         }
     }
 
@@ -217,7 +217,7 @@ class GeminiClient(configuration: Configuration) {
      * Builder для создания списка SafetySetting.
      * Позволяет гибко и удобно настраивать параметры безопасности.
      */
-    class SafetySettingsBuilder {
+    public class SafetySettingsBuilder {
         private val safetySettingsList = mutableListOf<SafetySetting>()
 
         /**
@@ -225,7 +225,7 @@ class GeminiClient(configuration: Configuration) {
          * @param setting Настройка безопасности.
          * @return SafetySettingsBuilder для цепочки вызовов.
          */
-        fun addSetting(setting: SafetySetting): SafetySettingsBuilder {
+        public fun addSetting(setting: SafetySetting): SafetySettingsBuilder {
             safetySettingsList.add(setting)
             return this
         }
@@ -235,7 +235,7 @@ class GeminiClient(configuration: Configuration) {
          * @param category Категория безопасности.
          * @return SafetySettingsBuilder для цепочки вызовов.
          */
-        fun blockNone(category: SafetyCategory): SafetySettingsBuilder =
+        public fun blockNone(category: SafetyCategory): SafetySettingsBuilder =
             addSetting(SafetySetting(category = category.value, threshold = SafetyThreshold.BLOCK_NONE.value))
 
         /**
@@ -243,7 +243,7 @@ class GeminiClient(configuration: Configuration) {
          * @param category Категория безопасности.
          * @return SafetySettingsBuilder для цепочки вызовов.
          */
-        fun blockOnlyHigh(category: SafetyCategory): SafetySettingsBuilder =
+        public fun blockOnlyHigh(category: SafetyCategory): SafetySettingsBuilder =
             addSetting(SafetySetting(category = category.value, threshold = SafetyThreshold.BLOCK_ONLY_HIGH.value))
 
         /**
@@ -251,7 +251,7 @@ class GeminiClient(configuration: Configuration) {
          * @param category Категория безопасности.
          * @return SafetySettingsBuilder для цепочки вызовов.
          */
-        fun blockMediumAndAbove(category: SafetyCategory): SafetySettingsBuilder =
+        public fun blockMediumAndAbove(category: SafetyCategory): SafetySettingsBuilder =
             addSetting(SafetySetting(category = category.value, threshold = SafetyThreshold.BLOCK_MEDIUM_AND_ABOVE.value))
 
         /**
@@ -259,67 +259,67 @@ class GeminiClient(configuration: Configuration) {
          * @param category Категория безопасности.
          * @return SafetySettingsBuilder для цепочки вызовов.
          */
-        fun blockLowAndAbove(category: SafetyCategory): SafetySettingsBuilder =
+        public fun blockLowAndAbove(category: SafetyCategory): SafetySettingsBuilder =
             addSetting(SafetySetting(category = category.value, threshold = SafetyThreshold.BLOCK_LOW_AND_ABOVE.value))
 
         /**
          * Устанавливает порог блокировки на BLOCK_MEDIUM_AND_ABOVE для категории HARM_CATEGORY_HARASSMENT.
          * @return SafetySettingsBuilder для цепочки вызовов.
          */
-        fun blockMediumAndAboveHarassment() = blockMediumAndAbove(SafetyCategory.HARM_CATEGORY_HARASSMENT)
+        public fun blockMediumAndAboveHarassment(): SafetySettingsBuilder = blockMediumAndAbove(SafetyCategory.HARM_CATEGORY_HARASSMENT)
         /**
          * Устанавливает порог блокировки на BLOCK_MEDIUM_AND_ABOVE для категории HARM_CATEGORY_HATE_SPEECH.
          * @return SafetySettingsBuilder для цепочки вызовов.
          */
-        fun blockMediumAndAboveHateSpeech() = blockMediumAndAbove(SafetyCategory.HARM_CATEGORY_HATE_SPEECH)
+        public fun blockMediumAndAboveHateSpeech(): SafetySettingsBuilder = blockMediumAndAbove(SafetyCategory.HARM_CATEGORY_HATE_SPEECH)
         /**
          * Устанавливает порог блокировки на BLOCK_MEDIUM_AND_ABOVE для категории HARM_CATEGORY_SEXUALLY_EXPLICIT.
          * @return SafetySettingsBuilder для цепочки вызовов.
          */
-        fun blockMediumAndAboveSexuallyExplicit() = blockMediumAndAbove(SafetyCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT)
+        public fun blockMediumAndAboveSexuallyExplicit(): SafetySettingsBuilder = blockMediumAndAbove(SafetyCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT)
         /**
          * Устанавливает порог блокировки на BLOCK_MEDIUM_AND_ABOVE для категории HARM_CATEGORY_DANGEROUS_CONTENT.
          * @return SafetySettingsBuilder для цепочки вызовов.
          */
-        fun blockMediumAndAboveDangerousContent() = blockMediumAndAbove(SafetyCategory.HARM_CATEGORY_DANGEROUS_CONTENT)
+        public fun blockMediumAndAboveDangerousContent(): SafetySettingsBuilder = blockMediumAndAbove(SafetyCategory.HARM_CATEGORY_DANGEROUS_CONTENT)
         /**
          * Устанавливает порог блокировки на BLOCK_MEDIUM_AND_ABOVE для категории HARM_CATEGORY_CIVIC_INTEGRITY.
          * @return SafetySettingsBuilder для цепочки вызовов.
          */
-        fun blockMediumAndAboveCivicIntegrity() = blockMediumAndAbove(SafetyCategory.HARM_CATEGORY_CIVIC_INTEGRITY)
+        public fun blockMediumAndAboveCivicIntegrity(): SafetySettingsBuilder = blockMediumAndAbove(SafetyCategory.HARM_CATEGORY_CIVIC_INTEGRITY)
 
         /**
          * Устанавливает порог блокировки на BLOCK_ONLY_HIGH для категории HARM_CATEGORY_HARASSMENT.
          * @return SafetySettingsBuilder для цепочки вызовов.
          */
-        fun blockOnlyHighHarassment() = blockOnlyHigh(SafetyCategory.HARM_CATEGORY_HARASSMENT)
+        public fun blockOnlyHighHarassment(): SafetySettingsBuilder = blockOnlyHigh(SafetyCategory.HARM_CATEGORY_HARASSMENT)
         /**
          * Устанавливает порог блокировки на BLOCK_ONLY_HIGH для категории HARM_CATEGORY_HATE_SPEECH.
          * @return SafetySettingsBuilder для цепочки вызовов.
          */
-        fun blockOnlyHighHateSpeech() = blockOnlyHigh(SafetyCategory.HARM_CATEGORY_HATE_SPEECH)
+        public fun blockOnlyHighHateSpeech(): SafetySettingsBuilder = blockOnlyHigh(SafetyCategory.HARM_CATEGORY_HATE_SPEECH)
         /**
          * Устанавливает порог блокировки на BLOCK_ONLY_HIGH для категории HARM_CATEGORY_SEXUALLY_EXPLICIT.
          * @return SafetySettingsBuilder для цепочки вызовов.
          */
-        fun blockOnlyHighSexuallyExplicit() = blockOnlyHigh(SafetyCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT)
+        public fun blockOnlyHighSexuallyExplicit(): SafetySettingsBuilder = blockOnlyHigh(SafetyCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT)
         /**
          * Устанавливает порог блокировки на BLOCK_ONLY_HIGH для категории HARM_CATEGORY_DANGEROUS_CONTENT.
          * @return SafetySettingsBuilder для цепочки вызовов.
          */
-        fun blockOnlyHighDangerousContent() = blockOnlyHigh(SafetyCategory.HARM_CATEGORY_DANGEROUS_CONTENT)
+        public fun blockOnlyHighDangerousContent(): SafetySettingsBuilder = blockOnlyHigh(SafetyCategory.HARM_CATEGORY_DANGEROUS_CONTENT)
         /**
          * Устанавливает порог блокировки на BLOCK_ONLY_HIGH для категории HARM_CATEGORY_CIVIC_INTEGRITY.
          * @return SafetySettingsBuilder для цепочки вызовов.
          */
-        fun blockOnlyHighCivicIntegrity() = blockOnlyHigh(SafetyCategory.HARM_CATEGORY_CIVIC_INTEGRITY)
+        public fun blockOnlyHighCivicIntegrity(): SafetySettingsBuilder = blockOnlyHigh(SafetyCategory.HARM_CATEGORY_CIVIC_INTEGRITY)
 
 
         /**
          * Завершает построение списка SafetySetting и возвращает его.
          * @return Список SafetySetting.
          */
-        fun build(): List<SafetySetting> = safetySettingsList.toList()
+        public fun build(): List<SafetySetting> = safetySettingsList.toList()
     }
 
 
@@ -327,7 +327,7 @@ class GeminiClient(configuration: Configuration) {
      * Builder для создания объекта GenerationConfig.
      * Позволяет гибко и удобно настраивать параметры генерации.
      */
-    class GenerationConfigBuilder {
+    public class GenerationConfigBuilder {
         private var temperature: Double? = null
         private var topP: Double? = null
         private var topK: Int? = null
@@ -339,43 +339,43 @@ class GeminiClient(configuration: Configuration) {
          * @param value Значение температуры (0.0 - 1.0).
          * @return GenerationConfigBuilder для цепочки вызовов.
          */
-        fun temperature(value: Double?) = apply { this.temperature = value }
+        public fun temperature(value: Double?): GenerationConfigBuilder = apply { this.temperature = value }
         /**
          * Устанавливает Top-P sampling.
          * @param value Значение Top-P (0.0 - 1.0).
          * @return GenerationConfigBuilder для цепочки вызовов.
          */
-        fun topP(value: Double?) = apply { this.topP = value }
+        public fun topP(value: Double?): GenerationConfigBuilder = apply { this.topP = value }
         /**
          * Устанавливает Top-K sampling.
          * @param value Значение Top-K (целое число).
          * @return GenerationConfigBuilder для цепочки вызовов.
          */
-        fun topK(value: Int?) = apply { this.topK = value }
+        public fun topK(value: Int?): GenerationConfigBuilder = apply { this.topK = value }
         /**
          * Устанавливает максимальное количество токенов в ответе.
          * @param value Максимальное количество токенов.
          * @return GenerationConfigBuilder для цепочки вызовов.
          */
-        fun maxOutputTokens(value: Int?) = apply { this.maxOutputTokens = value }
+        public fun maxOutputTokens(value: Int?): GenerationConfigBuilder = apply { this.maxOutputTokens = value }
         /**
          * Устанавливает стоп-последовательности. Генерация остановится, как только одна из последовательностей будет сгенерирована.
          * @param value Список стоп-последовательностей.
          * @return GenerationConfigBuilder для цепочки вызовов.
          */
-        fun stopSequences(value: List<String>?) = apply { this.stopSequences = value }
+        public fun stopSequences(value: List<String>?): GenerationConfigBuilder = apply { this.stopSequences = value }
         /**
          * Устанавливает стоп-последовательности (vararg версия).
          * @param value Переменное количество стоп-последовательностей.
          * @return GenerationConfigBuilder для цепочки вызовов.
          */
-        fun stopSequences(vararg value: String) = apply { this.stopSequences = value.toList() }
+        public fun stopSequences(vararg value: String): GenerationConfigBuilder = apply { this.stopSequences = value.toList() }
 
         /**
          * Завершает построение объекта GenerationConfig и возвращает его.
          * @return GenerationConfig.
          */
-        fun build(): GenerationConfig = GenerationConfig(
+        public fun build(): GenerationConfig = GenerationConfig(
             temperature = temperature,
             topP = topP,
             topK = topK,
@@ -388,7 +388,7 @@ class GeminiClient(configuration: Configuration) {
      * Enum класс для выбора модели Gemini.
      * Добавьте сюда новые модели по мере их появления в API.
      */
-    enum class GeminiModel(val modelName: String) {
+    public enum class GeminiModel(public val modelName: String) {
         GEMINI_15PRO("gemini-1.5-pro"),
         GEMINI_20FLASH("gemini-2.0-flash"),
         GEMINI_20FLASH_EXP("gemini-2.0-flash-thinking-exp-01-21"),

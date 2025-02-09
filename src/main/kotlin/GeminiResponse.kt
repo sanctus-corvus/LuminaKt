@@ -3,6 +3,6 @@ package com.github.sanctuscorvus
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GeminiResponse(
+public data class GeminiResponse(
     val candidates: List<Candidate>? = null
 )

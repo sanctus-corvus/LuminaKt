@@ -1,6 +1,6 @@
 package com.github.sanctuscorvus
 
-enum class SafetyCategory(val value: String) {
+public enum class SafetyCategory(public val value: String) {
     HARM_CATEGORY_HARASSMENT("HARM_CATEGORY_HARASSMENT"),
     HARM_CATEGORY_HATE_SPEECH("HARM_CATEGORY_HATE_SPEECH"),
     HARM_CATEGORY_SEXUALLY_EXPLICIT("HARM_CATEGORY_SEXUALLY_EXPLICIT"),

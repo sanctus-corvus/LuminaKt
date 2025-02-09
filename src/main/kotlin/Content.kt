@@ -2,6 +2,6 @@ package com.github.sanctuscorvus
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Content(
+public data class Content(
     val parts: List<Part>
 )

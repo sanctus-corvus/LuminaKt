@@ -3,7 +3,7 @@ package com.github.sanctuscorvus
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GenerationConfig(
+public data class GenerationConfig(
     val temperature: Double? = null,
     val topP: Double? = null,
     val topK: Int? = null,
