@@ -5,7 +5,9 @@ plugins {
 }
 group = "com.github.sanctus-corvus"
 version = "0.1"
-
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17)) // 17-й JDK стабилен для JitPack
+}
 repositories {
     mavenCentral()
 }
