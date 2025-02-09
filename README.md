@@ -3,24 +3,23 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![](https://jitpack.io/v/sanctus-corvus/LuminaKt.svg)](https://jitpack.io/#sanctus-corvus/LuminaKt)
 
-**Your Kotlin Gateway to the Power of Gemini AI**
 
-Unlock the potential of Google's cutting-edge Gemini models directly within your Kotlin and JVM projects with the **Gemini Kotlin Client**. This lightweight and intuitive library simplifies interaction with the Gemini API, allowing you to effortlessly integrate powerful generative AI capabilities into your applications.
+**Lumina - Kotlin Client for Google Gemini API**
 
-Whether you're building chatbots, content generation tools, creative writing assistants, or anything in between, the Gemini Kotlin Client provides a seamless and developer-friendly experience.
+Gemini Kotlin Client is a Kotlin library designed to facilitate interaction with the Google Gemini API for JVM-based projects.  It provides a straightforward interface for common Gemini API functionalities, such as generating text content, configuring generation parameters, and managing safety settings.
 
-## ✨ Key Features
+This library is intended for Kotlin developers who need to integrate Gemini's generative AI capabilities into applications like chatbots, content creation tools, and other AI-driven services.  It focuses on ease of use and a clear, Kotlin-idiomatic API.
+## ✨ Features
 
-*   **Effortless Gemini API Integration:**  Provides a clean and Kotlin-idiomatic interface for interacting with the Gemini API.
-*   **Content Generation Made Simple:**  Easily generate text-based content with the `generateContent` function, leveraging the power of Gemini models.
-*   **Flexible Configuration:**  Customize your client with API key, model selection (including Gemini Pro and more), and base API URL.
-*   **Safety Settings Control:**  Fine-tune safety settings to control content filtering based on categories like harassment, hate speech, and more.
-*   **Generation Configuration Options:**  Adjust generation parameters like temperature, top-p, top-k, and max output tokens for creative or precise text generation.
-*   **Builder Pattern for Settings:**  Utilize intuitive `SafetySettingsBuilder` and `GenerationConfigBuilder` for easy and readable configuration of safety and generation parameters.
-*   **Kotlinx Serialization:**  Uses kotlinx.serialization for efficient and type-safe JSON handling.
-*   **Lightweight and Dependency-Friendly:**  Minimal dependencies, designed to integrate smoothly into your Kotlin and JVM projects.
-*   **Open Source & MIT Licensed:**  Free to use and modify, fostering community contributions and growth.
-
+*   **Gemini API Access:** Provides a Kotlin-friendly client for interacting with the Google Gemini API.
+*   **Text Generation:** Simplifies text content generation using Gemini models with the `generateContent` function.
+*   **Configuration Options:** Allows customization of API key, model, base URL, safety settings, and generation parameters.
+*   **Safety Controls:**  Offers fine-grained control over content safety filters (harassment, hate speech, etc.).
+*   **Generation Parameters:**  Supports adjusting generation settings like temperature, top-p, and max tokens.
+*   **Builders for Configuration:**  Uses `SafetySettingsBuilder` and `GenerationConfigBuilder` for type-safe and readable configuration.
+*   **Kotlinx Serialization:**  Leverages kotlinx.serialization for JSON handling.
+*   **Lightweight:**  Minimal dependencies and small footprint.
+*   **MIT Licensed:**  Open-source library with MIT license.
 ## 🚀 Getting Started
 
 Integrate the Gemini Kotlin Client into your project in just a few steps:
