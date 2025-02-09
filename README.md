@@ -52,25 +52,24 @@ Here's a quick example of how to use the `GeminiClient` to generate content:
 
 ```kotlin
 import com.github.sanctuscorvus.GeminiClient
-import com.github.sanctuscorvus.Configuration
 
 fun main() {
-    val apiKey = "YOUR_GEMINI_API_KEY" // 🔑  Replace with your actual Gemini API Key
-    val configuration = Configuration.default(apiKey) // Create default configuration with your API key
+    val apiKey = "YOUR_GEMINI_API_KEY"
+    val configuration = GeminiClient.Configuration.default(apiKey)
     val geminiClient = GeminiClient(configuration)
 
     val prompt = "Write a short poem about the beauty of Kotlin."
 
     val response = geminiClient.generateContent(prompt)
 
-    if (response.isSuccessful()) {
-        response.body()?.candidates?.forEach { candidate ->
-            candidate.content.parts.forEach { part ->
+    if (response.statusCode in 200..299) {
+        response.body?.candidates?.forEach { candidate ->
+            candidate.content?.parts?.forEach { part ->
                 println(part.text)
             }
         }
     } else {
-        println("Error generating content: ${response.statusCode()} - ${response.body()}")
+        println("Error generating content: ${response.statusCode} - ${response.body}")
     }
 }
 ```
