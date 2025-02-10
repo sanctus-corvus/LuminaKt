@@ -1,4 +1,5 @@
 package com.github.sanctuscorvus
+import com.github.sanctuscorvus.*
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -20,7 +21,8 @@ public class GeminiClient(configuration: Configuration) {
     private val defaultSafetySettings: List<SafetySetting>? = configuration.defaultSafetySettings
     private val defaultGenerationConfig: GenerationConfig? = configuration.defaultGenerationConfig
 
-    private val json = Json { ignoreUnknownKeys = true }
+    private val json: Json = Json { ignoreUnknownKeys = true }
+    private val httpClient: HttpClient = HttpClient.newHttpClient()
 
     /**
      * Отправляет POST запрос к API.
@@ -38,7 +40,6 @@ public class GeminiClient(configuration: Configuration) {
         responseDeserializer: kotlinx.serialization.KSerializer<TResponse>,
         headers: Map<String, String>? = null
     ): HttpResponse<TResponse> {
-        val client = HttpClient.newHttpClient()
         val fullApiUrl = "$apiUrl?key=$apiKey"
         val jsonData = json.encodeToString(requestSerializer, requestBody)
 
@@ -54,9 +55,9 @@ public class GeminiClient(configuration: Configuration) {
         val request = builder.build()
 
         return try {
-            val response: JavaHttpResponse<String> = client.send(request, JavaHttpResponse.BodyHandlers.ofString())
-            val responseBodyParsed: TResponse? = response.body()?.let {
-                json.decodeFromString(responseDeserializer, it)
+            val response: JavaHttpResponse<String> = httpClient.send(request, java.net.http.HttpResponse.BodyHandlers.ofString())
+            val responseBodyParsed: TResponse? = response.body()?.takeIf { it.isNotBlank() }?.let {
+                json.decodeFromString(responseDeserializer, it) // FIX: Используем переиспользуемый сериализатор
             }
             HttpResponse(response.statusCode(), responseBodyParsed)
         } catch (e: Exception) {
